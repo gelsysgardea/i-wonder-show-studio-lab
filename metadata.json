@@ -1,0 +1,6 @@
+{
+  "name": "Google FX Flow Studio Generator & Executable Bundle",
+  "description": "Full-stack suite for Google FX Flow AI pipelines with exportable Python executable bundles, setup.sh venv automation, JWT auth, AES data encryption, Docker & Kubernetes manifests, and token usage optimization.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

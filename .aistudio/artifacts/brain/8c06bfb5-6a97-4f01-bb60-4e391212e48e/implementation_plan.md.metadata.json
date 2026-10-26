@@ -1,0 +1,6 @@
+{
+  "summary":  "Plan de implementación para la integración del componente VoiceDirector en AnimaticTheater: consola de dirección de doblaje escena por escena para Saúl y César con selector de voces Gemini (Charon, Puck, Fenrir, Zephyr), moduladores de tono y velocidad, perfiles de estilo actoral, generador TTS dual en tiempo real y secuenciador sincronizado de efectos de sonido cósmicos y cómicos.",
+  "updatedAt":  "2026-10-26T01:14:56.638967341Z",
+  "requestFeedback":  true,
+  "userFacing":  true
+}
