@@ -335,7 +335,13 @@ app.post("/api/scene/generate-image", async (req, res) => {
 // 3. Generate Dual Voice Audio (TTS) for Scene Dialogues
 app.post("/api/scene/generate-tts", async (req, res) => {
   try {
-    const { dialogue } = req.body; // array of { speaker, text, emotion }
+    const {
+      dialogue,
+      saulVoice = "Charon",
+      cesarVoice = "Puck",
+      saulStyle = "Calm, grounded, slightly sarcastic and instructional",
+      cesarStyle = "Excited, animated, energetic and curious",
+    } = req.body;
 
     if (!dialogue || !Array.isArray(dialogue) || dialogue.length === 0) {
       return res.status(400).json({ error: "Se requiere un arreglo de diálogos." });
@@ -362,7 +368,7 @@ app.post("/api/scene/generate-tts", async (req, res) => {
                 text: `${d.speaker}: ${d.text}`,
                 speechMetadata: {
                   speaker: d.speaker,
-                  style: d.speaker === "Saul" ? "Calm, grounded, slightly sarcastic and instructional" : "Excited, animated, energetic and curious",
+                  style: d.speaker === "Saul" ? (d.speechStyle || saulStyle) : (d.speechStyle || cesarStyle),
                 },
               })),
             },
@@ -372,8 +378,8 @@ app.post("/api/scene/generate-tts", async (req, res) => {
             speechConfig: {
               multiSpeakerVoiceConfig: {
                 speakerVoiceConfigs: [
-                  { speaker: "Saul", voiceConfig: { prebuiltVoiceConfig: { voiceName: "Charon" } } },
-                  { speaker: "Cesar", voiceConfig: { prebuiltVoiceConfig: { voiceName: "Puck" } } },
+                  { speaker: "Saul", voiceConfig: { prebuiltVoiceConfig: { voiceName: saulVoice } } },
+                  { speaker: "Cesar", voiceConfig: { prebuiltVoiceConfig: { voiceName: cesarVoice } } },
                 ],
               },
             },
@@ -388,7 +394,7 @@ app.post("/api/scene/generate-tts", async (req, res) => {
 
     // Fallback to single speaker standard TTS if not multi-speaker or failed
     if (!base64Audio) {
-      const primaryVoice = dialogue[0]?.speaker === "Saul" ? "Charon" : "Puck";
+      const primaryVoice = dialogue[0]?.speaker === "Saul" ? saulVoice : cesarVoice;
       const response = await ai.models.generateContent({
         model: "gemini-3.8-flash-lite-tts",
         contents: [

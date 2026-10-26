@@ -127,6 +127,7 @@ export default function App() {
         {activeTab === "animatic" && (
           <AnimaticTheater
             episode={currentEpisode}
+            onUpdateEpisode={handleUpdateEpisode}
             onNavigateToFactory={() => setActiveTab("factory")}
           />
         )}
